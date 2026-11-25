@@ -2,6 +2,7 @@
   "strings": {
     "Accel HF": "Beschl. HF",
     "Accel HF vibration (z)": "Beschleunigung-HF-Vibration (z)",
+    "Could not enable high-rate vibration stream, showing PX4 default-rate data": "Der schnelle Vibrationsstrom ließ sich nicht einschalten. Es werden die PX4-Daten in der Standardrate gezeigt.",
     "Gyro coning": "Gyro-Coning",
     "Gyro coning (x)": "Gyro-Coning (x)",
     "Gyro HF": "Gyro HF",
