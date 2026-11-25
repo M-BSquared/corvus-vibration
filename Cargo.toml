@@ -9,15 +9,7 @@ description = "The vibration plugin of Corvus GCS"
 
 [dependencies]
 corvus_api = { path = "../../src/api" }
-eframe = { workspace = true }
 serde_json = { workspace = true }
 
 [lib]
 crate-type = ["cdylib", "rlib"]
-
-[package.metadata.corvus]
-loadable = true
-name = "Vibration Monitor"
-description = "Live PX4 vibration metrics and accelerometer clipping"
-icon = "activity"
-version = "1.0.0"

@@ -8,7 +8,7 @@
 //! (`POST /api/vibration/stream`, PX4 sends 0.1 Hz by default) and gives the
 //! default back when it closes.
 
-use eframe::egui::{self, Color32, Pos2, Rect, Stroke, Vec2};
+use corvus_api::egui::{self, Color32, Pos2, Rect, Stroke, Vec2};
 use serde_json::{json, Value};
 
 use corvus_api::plugin::{Host, Info, Plugin, Reply};
@@ -130,7 +130,7 @@ impl Plugin for Vibration {
             name: "Vibration Monitor",
             icon: "activity",
             description: "Live PX4 vibration metrics and accelerometer clipping",
-            version: "1.0.0",
+            version: "2.0.0",
             order: 10,
             can_tab: false,
         }
@@ -330,20 +330,20 @@ mod tests {
     use super::*;
 
     #[test]
-    fn the_details_the_store_lists_are_the_plugins_own() {
-        let manifest = include_str!("../Cargo.toml").replace('\r', "");
+    fn the_manifest_says_what_the_plugin_says_of_itself() {
+        let manifest: Value = serde_json::from_str(include_str!("../plugin.json")).expect("plugin.json");
         let i = Vibration::default().info();
         for (key, want) in [
+            ("id", i.id),
             ("name", i.name),
             ("description", i.description),
             ("icon", i.icon),
             ("version", i.version),
         ] {
-            assert!(
-                manifest.contains(&format!("\n{key} = \"{want}\"\n")),
-                "[package.metadata.corvus] says something else than the plugin for {key}"
-            );
+            assert_eq!(manifest[key], want, "plugin.json says something else than the plugin for {key}");
         }
+        assert_eq!(manifest["order"], i.order);
+        assert_eq!(manifest["can_tab"], i.can_tab);
     }
 
     fn s(x: f64, y: f64, z: f64) -> Value {

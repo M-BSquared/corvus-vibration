@@ -1,0 +1,11 @@
+{
+  "id": "vibration",
+  "name": "Vibration Monitor",
+  "description": "Live PX4 vibration metrics and accelerometer clipping",
+  "icon": "activity",
+  "version": "2.0.0",
+  "order": 10,
+  "can_tab": false,
+  "min_corvus": "2026.11.94",
+  "permissions": ["telemetry.rates"]
+}
