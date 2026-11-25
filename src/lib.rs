@@ -13,6 +13,7 @@ use serde_json::{json, Value};
 
 use corvus_api::plugin::{Host, Info, Plugin, Reply};
 use corvus_api::ui::chart::{self, Series};
+use corvus_api::ui::message::{self, Tone};
 use corvus_api::ui::style::{self, Weight};
 
 /// About 60 s at 10 Hz.
@@ -287,18 +288,7 @@ fn trace_colors() -> [Color32; 3] {
 
 /// `.vib-warning`.
 fn warning(ui: &egui::Ui, x: f32, y: f32, w: f32, text: &str) -> f32 {
-    let g = corvus_api::ui::kit::wrapped_weight(ui, text, 11.0, Weight::W400, style::warning(), w - 22.0, 1.45);
-    let r = Rect::from_min_size(Pos2::new(x, y), Vec2::new(w, g.size().y + 18.0));
-    ui.painter().rect_filled(r, style::RADIUS_BTN, style::warning_dark());
-    ui.painter().rect_stroke(
-        r,
-        style::RADIUS_BTN,
-        Stroke::new(1.0, style::warning()),
-        egui::StrokeKind::Inside,
-    );
-    ui.painter()
-        .galley(Pos2::new(r.left() + 11.0, r.top() + 9.0), g, style::warning());
-    r.height()
+    message::boxed(ui, x, y, w, text, Tone::Warn) - y
 }
 
 /// Plotly's legend at the plot's top right: a line sample and the name.
