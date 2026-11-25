@@ -14,7 +14,7 @@ the [Corvus guide](https://m-bsquared.github.io/CorvusGCS/guide/plugins.html#vib
 ## What it is
 
 A Rust crate (`corvus_plugin_vibration`) built on `corvus_api`, the plugin API of Corvus GCS, and
-published as a shared library from this repository.
+built into a WebAssembly module that every system runs, published from this repository.
 
 - `src/lib.rs`: the plugin, its rules and what is drawn.
 - `lang/`: German, French and the dialect file.
@@ -41,13 +41,13 @@ Commit, then:
 ./release.sh
 ```
 
-It runs the tests and pushes `main`. The workflow builds the plugin for the
-newest published Corvus GCS on Linux, macOS and Windows, lets that program load
-it, and attaches it to the release `abi-<sum>` of this repository, where every
-Corvus GCS with the same plugin interface finds it. A Corvus GCS with a new
-interface gets its build within hours. With nothing to push, `./release.sh`
-starts that build at once. `--watch` waits for the result, `--help` lists the
-rest.
+It runs the tests and pushes `main`. The workflow builds the plugin once, with the oldest Corvus
+GCS that `plugin.json` names (`min_corvus`) or the first published one after it, lets that program
+load it, and attaches it to the release `plugin` of this repository. Every later Corvus GCS takes
+it as it is. Raise `min_corvus` when the plugin starts to need something newer: older stations
+then go on getting the last version that fits them. `plugin.json` also names the permissions the
+plugin uses, which the operator sees before installing it. `--watch` waits for the result, `--help`
+lists the rest.
 
 ## Tests
 
